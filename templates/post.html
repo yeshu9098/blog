@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Post
+{% endblock %}
+
+{% block body %}
+
+<div class="container mt-4 mb-4">
+      <div class="row">
+            <div class="col-sm-9">
+                  <h4 class="card-title">{{ post.title }}</a></h4>
+                  <div>
+                        {{post.category}}&ensp;
+                        {{post.date}}&ensp;
+                        Author:&ensp;<a href="{% url 'app:profile' id=post.user.id %}">{{post.user.first_name}}</a>
+                  </div>
+                  <br/>
+                  <p class="card-text">{{ post.content | safe}}</p><br>
+                  <a class="btn btn-outline-secondary" href="{% url 'app:index' %}">Back</a>
+                  {% if post.user.id == user.id %}
+                  <a class="btn btn-outline-primary" href="{% url 'app:update' id=post.id %}">Update</a>
+                  <a class="btn btn-outline-danger" href="{% url 'app:delete' id=post.id %}">Delete</a>
+                  {% endif %}
+            </div> <br>
+
+            <div class="col-sm-3">
+                  <div class="card mt-2">
+                  <div class="card-header">
+                  Categories
+                  </div>
+                  <ul class="list-group list-group-flush">
+                  {% for cat in cat %} 
+                  <a href="/category/{{cat.title}}" class="list-group-item">{{cat.title}}</a>
+                  {% endfor %} 
+                  </ul>
+                  </div>
+            </div>
+      </div><br>
+      
+  
+</div>
+{% endblock %}

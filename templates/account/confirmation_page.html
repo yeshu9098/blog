@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Confirmation Page
+{% endblock %}
+
+{% block body %}
+{% if user.is_authenticated %}
+<h1>Home Page</h1>
+Your are logged in {{ user.username }}!<br/><br>
+Your Email address is {{ user.email  }}!<br/>
+Thank you for your email confirmation. Now you can login your account.
+<p><a href="{% url 'app:index' %}">Redirect To Home Page</a></p>
+{% else %}
+<p>You are not logged in</p>
+<a href="{% url 'account:login' %}">Log In</a> |
+<a href="{% url 'account:register' %}">Sign Up</a>
+{% endif %}
+{% endblock %}

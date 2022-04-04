@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Update{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <div class="m-2 mt-3 mb-5">
+    {% if user.is_authenticated %}
+    <div class="form-group col-sm-9">
+      <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.media }}
+          {{ form.as_p }}
+          <button class="btn btn-success" type="submit">Update</button>
+          <a href="{% url 'app:post' id=post.id%}" class="btn btn-outline-secondary">Back</a>
+      </form>
+  </div>
+    {% else %}
+      <p>You are not logged in</p>
+      <a class="btn btn-outline-primary" href="{% url 'account:login' %}">Log In</a> |
+      <a class="btn btn-outline-secondary" href="{% url 'account:register' %}">Sign Up</a>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

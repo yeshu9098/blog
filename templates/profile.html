@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+
+{% if user.is_authenticated %}
+<div class="container mt-3">
+  <div class="card">
+    <h5 class="card-header">Profile</h5>
+    <div class="card-body">
+    <strong>Full Name: </strong>{{ obj.first_name }} {{ obj.last_name }}<br>
+    <strong>Username: </strong>{{ obj.username }}<br>
+    <strong>User ID: </strong>{{ obj.id }}<br>
+    <strong>Email: </strong>{{ obj.email }}<br><br>
+    {% if request.user.id == post.id %}
+    <a class="btn btn-outline-danger" href="{% url 'app:logout' %}">Logout</a>
+    <a class="btn btn-outline-primary" href="{% url 'account:edit_profile' id=user.id %}">Edit Profile</a>
+    {% endif %}
+    <a class="btn btn-outline-secondary" href="{% url 'app:index' %}">Back</a>
+    </div>
+  </div>
+</div>
+<br>
+
+<div class="container">
+  <div class="row">
+    {% if request.user.id == post.id %}
+    <h3>Your All Posts</h3>
+    {% else %}
+    <h3>All Posts of {{ obj.first_name }} {{ obj.last_name }}</h3>
+    {% endif %}
+    <div class="col-sm-9">
+      {% for posts in posts %}
+        <div class="card mt-2 mb-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ posts.title }}</a></h5>
+            <p class="card-text">{{ posts.content|striptags|slice:':300' }}</p>
+            <a href="{% url 'app:post' id=posts.id%}" class="btn btn-outline-secondary">Read more</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="col-sm-3">
+    </div>
+  </div>   
+</div>
+  {% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'account:login' %}">Log In</a> |
+  <a href="{% url 'account:register' %}">Sign Up</a>
+  {% endif %}
+
+{% endblock %}

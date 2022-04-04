@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}API{% endblock %}
+{% block body %}
+
+<center>
+<table>
+    <h3 class="m-2 mt-3">List Of Covid Affected Countries</h3>
+    <tr>
+        <th>Country Name</th>
+        <th>ISO2</th>
+    </tr>
+
+    {% for i in responce %}
+    <tr>
+        <th>{{i.Country}}</th>
+        <th>{{i.ISO2}}</th>
+    </tr>
+    {% endfor %}
+
+</table>
+</center>
+{% endblock %}

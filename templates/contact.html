@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+
+    {% if error %}
+    <p><strong>Message sending failed</strong></p>
+    {% endif %}
+
+<div class="container">
+    <div class="m-2 mt-3 mb-5">
+      {% if user.is_authenticated %}
+        <form action="" method="POST">
+          {% csrf_token %}
+
+            <div class="mb-3">
+              <label for="message" class="form-label">Give us feedback!</label>
+              <textarea class="form-control" name="message"  rows="3" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">Send</button>
+        </form>
+      {% else %}
+        <p>You are not logged in</p>
+        <a class="btn btn-outline-primary" href="{% url 'account:login' %}">Log In</a> |
+        <a class="btn btn-outline-secondary" href="{% url 'account:register' %}">Sign Up</a>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

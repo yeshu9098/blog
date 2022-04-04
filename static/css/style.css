@@ -1,0 +1,7 @@
+.django-ckeditor-widget {
+    width: 100%;
+  }
+
+label {
+  padding-bottom: 10px;
+}

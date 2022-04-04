@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Home
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9">
+      {% if user.is_authenticated %}
+      <div class="card mt-2 ">
+        <div class="card-body text-center">
+          <a href="{% url 'app:addpost' %}" class="btn btn-success">Add A Post</a>
+        </div>
+      </div>
+      {% endif %}
+      {% for p in posts %}
+        <div class="card mt-2">
+          <div class="card-body">
+            <h5 class="card-title">{{ p.title }}</a></h5>
+            <p class="card-text">{{ p.content|striptags|slice:':300' }}</p>
+            <a href="{% url 'app:post' id=p.id%}" class="btn btn-outline-secondary">Read more</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="col-sm-3">
+      {% if user.is_authenticated %}
+      <div class="card mt-2">
+        <div class="card-body">
+          <strong>Full Name: </strong>{{ user.first_name }} {{ user.last_name }}<br>
+          <strong>Username: </strong>{{ user.username }}<br>
+          <strong>User ID: </strong>{{ user.id }}<br>
+          <strong>Email: </strong>{{ user.email }}<br><br>
+          <a href="{% url 'app:profile' id=user.id %}" class="btn btn-outline-secondary">Profile</a>
+        </div>
+      </div>
+      {% endif %}
+        <div class="card mt-2 mb-3">
+          <div class="card-header">
+            Categories
+          </div>
+          <ul class="list-group list-group-flush">
+            {% for cat in cat %} 
+            <a href="/category/{{cat.title}}" class="list-group-item">{{cat.title}}</a>
+            {% endfor %} 
+          </ul>
+        </div>
+    </div>
+  </div>   
+</div>
+
+{% endblock %}
