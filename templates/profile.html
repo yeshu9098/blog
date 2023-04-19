@@ -23,28 +23,6 @@
 </div>
 <br>
 
-<div class="container">
-  <div class="row">
-    {% if request.user.id == post.id %}
-    <h3>Your All Posts</h3>
-    {% else %}
-    <h3>All Posts of {{ obj.first_name }} {{ obj.last_name }}</h3>
-    {% endif %}
-    <div class="col-sm-9">
-      {% for posts in posts %}
-        <div class="card mt-2 mb-3">
-          <div class="card-body">
-            <h5 class="card-title">{{ posts.title }}</a></h5>
-            <p class="card-text">{{ posts.content|striptags|slice:':300' }}</p>
-            <a href="{% url 'app:post' id=posts.id%}" class="btn btn-outline-secondary">Read more</a>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-    <div class="col-sm-3">
-    </div>
-  </div>   
-</div>
   {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'account:login' %}">Log In</a> |

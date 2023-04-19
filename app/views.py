@@ -121,11 +121,9 @@ def update(request, id):
 def profile(request, id):
     if request.user.is_authenticated:
         obj = get_object_or_404(CustomUser, id = id)
-        post = get_object_or_404(Post, id = id)
         logged_in_user_posts = Post.objects.filter(user=obj)
         context = {
             'obj': obj,
-            'post' : post,
             'posts': logged_in_user_posts,
         }
         return render(request, 'profile.html', context)

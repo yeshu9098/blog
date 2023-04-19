@@ -1,7 +1,5 @@
 import os
-import django_heroku
 from pathlib import Path
-from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,12 +10,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # django-insecure-7xft2%!d49=5bw!s%cet13$95g&fhqozjg#^61%#06h&9e8q$r
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = 'django-insecure-7xft2%!d49=5bw!s%cet13$95g&fhqozjg#^61%#06h&9e8q$r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = True
 
-ALLOWED_HOSTS = ['yeeshublog.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -102,7 +100,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
@@ -110,13 +107,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-django_heroku.settings(locals())
-
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://yeeshublog.herokuapp.com'
-]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -124,28 +114,18 @@ CSRF_TRUSTED_ORIGINS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Database Postgresql
+# Database
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DB_NAME'),
-        'USER' : config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT', cast=int)
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
 AUTH_USER_MODEL = 'account.CustomUser'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True  
-EMAIL_HOST = 'smtp.gmail.com'  
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')  
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') 
-EMAIL_PORT = config('EMAIL_PORT', cast=int)
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER 
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
 
