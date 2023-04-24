@@ -9,13 +9,7 @@ Home
 <div class="container">
   <div class="row">
     <div class="col-sm-9">
-      {% if user.is_authenticated %}
-      <div class="card mt-2 ">
-        <div class="card-body text-center">
-          <a href="{% url 'app:addpost' %}" class="btn btn-success">Add A Post</a>
-        </div>
-      </div>
-      {% endif %}
+
       {% for p in posts %}
         <div class="card mt-2">
           <div class="card-body">

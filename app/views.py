@@ -122,10 +122,13 @@ def profile(request, id):
     if request.user.is_authenticated:
         obj = get_object_or_404(CustomUser, id = id)
         logged_in_user_posts = Post.objects.filter(user=obj)
+        post = get_object_or_404(Post, id = id)
         context = {
             'obj': obj,
             'posts': logged_in_user_posts,
+            'post': post,
         }
+        print(logged_in_user_posts)
         return render(request, 'profile.html', context)
     else:
         return redirect("account:login")
