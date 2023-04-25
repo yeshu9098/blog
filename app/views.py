@@ -4,10 +4,11 @@ from django.contrib.auth import logout
 from django.urls import reverse, reverse_lazy
 from django.core.mail import send_mail
 from datetime import datetime
-from app.models import Category, Contact, Post
-from .forms import MessageForm, PostForm
+from app.models import Category, Contact, Post, Comment
+from .forms import MessageForm, PostForm, CommentForm
 from account.models import CustomUser
 import requests
+from django.views.generic.detail import DetailView
 # Create your views here.
 
 
@@ -25,12 +26,26 @@ def index(request):
 
 def post(request, id):
     post = get_object_or_404(Post, id=id)
-    cat = Category.objects.all()[:10] 
+    cat = Category.objects.all()[:10]
+    comments = Comment.objects.all()
+    form = CommentForm(request.POST or None)
+    if form.is_valid():
+        comment = request.POST.get('comment')
+        comment = Comment.objects.create(post = post, user = request.user, comment = comment)
+        comment.save()
+        return redirect("/")
+
     context={
         "post":post,
         "cat" : cat,
+        "form" : form,
+        "comments" : comments,
     }
     return render(request, 'post.html', context)
+
+
+
+
 
 def category(request,title):
     category = Category.objects.get(title=title)
@@ -46,7 +61,7 @@ def category(request,title):
 
 def addpost(request):
     if request.user.is_authenticated:
-        cat = Category.objects.all()
+        cat = Category.objects.all()[:10]
         form = PostForm(request.POST or None)
         if form.is_valid():
             obj = form.save(commit = False)
@@ -187,3 +202,4 @@ def log_out(request):
 def api(request):
     response = requests.get("https://api.covid19api.com/countries").json()
     return render(request,'api.html', { 'responce': response })
+

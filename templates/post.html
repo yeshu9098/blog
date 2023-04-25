@@ -7,37 +7,77 @@ Post
 {% block body %}
 
 <div class="container mt-4 mb-4">
-      <div class="row">
-            <div class="col-sm-8">
-                  <h4 class="card-title">{{ post.title }}</a></h4>
-                  <div>
-                        {{post.category}}&ensp;
-                        {{post.date}}&ensp;
-                        Author:&ensp;<a href="{% url 'app:profile' id=post.user.id %}">{{post.user}}</a>
-                  </div>
-                  <br/>
-                  <p class="card-text">{{ post.content | safe}}</p><br>
-                  <a class="btn btn-outline-secondary" href="{% url 'app:index' %}">Back</a>
-                  {% if post.user.id == user.id %}
-                  <a class="btn btn-outline-primary" href="{% url 'app:update' id=post.id %}">Update</a>
-                  <a class="btn btn-outline-danger" href="{% url 'app:delete' id=post.id %}">Delete</a>
-                  {% endif %}
-            </div> <br>
-
-            <div class="col-sm-3">
-                  <div class="card mt-2">
-                  <div class="card-header">
-                  Categories
-                  </div>
-                  <ul class="list-group list-group-flush">
-                  {% for cat in cat %} 
-                  <a href="/category/{{cat.title}}" class="list-group-item">{{cat.title}}</a>
-                  {% endfor %} 
-                  </ul>
-                  </div>
+    <div class="row">
+        <div class="col-sm-9">
+            <h4 class="card-title">{{ post.title }}</a>
+            </h4>
+            <div>
+                {{ post.category }}&ensp;
+                {{ post.date.date }}&ensp;
+                Author:&ensp;<a href="{% url 'app:profile' id=post.user.id %}">{{ post.user.username }}</a>
             </div>
-      </div><br>
-      
-  
+            <br />
+
+            <p class="card-text">{{ post.content | safe }}</p>
+            <br>
+            <!--
+             <a class="btn btn-outline-secondary" href="{% url 'app:index' %}">Back</a>   -->
+            {% if post.user.id == user.id %}
+            <a class="btn btn-outline-primary" href="{% url 'app:update' id=post.id %}">Update</a>
+            <a class="btn btn-outline-danger" href="{% url 'app:delete' id=post.id %}">Delete</a>
+            {% endif %}
+            <br>
+            <br>
+            <div class="container">
+                <div class="form-group">
+                    <h4>Leave a comment</h4>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <textarea name="comment" id="" msg cols="30" rows="5" class="form-control" required></textarea>
+                        <br>
+                        <button type="submit" class="btn btn-outline-success">Send</button>
+                    </form>
+                </div>
+                <br><hr>
+                <h1>Comments</h1>
+                {% if not post.comments.all %}
+                No Comments
+                {% else %}
+                {% for comment in post.comments.all %}
+                {{ comment.user.username }}
+                -
+                {{ comment.date }}<br>
+                {{ comment.comment }}
+                <hr>
+                {% for reply in comments.replies.all %}
+                <li class="reply">
+                <div class="reply-body">
+                    <h3>{{ reply.user.username }}</h3>
+                    <div class="meta mb-3">{{ reply.date }}</div>
+                    <p>{{ reply.reply }}</p>
+                </div>
+                </li>
+            {% endfor %}
+                {% endfor %}
+                {% endif %}
+
+
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card mt-2">
+                <div class="card-header">
+                    Categories
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for cat in cat %}
+                    <a href="/category/{{ cat.title }}" class="list-group-item">{{ cat.title }}</a>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
 </div>
+
 {% endblock %}

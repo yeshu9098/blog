@@ -15,7 +15,7 @@ Home
           <div class="card-body">
             <h5 class="card-title">{{ p.title }}</a></h5>
             <p class="card-text">{{ p.content|striptags|slice:':300' }}</p>
-            <a href="{% url 'app:post' id=p.id%}" class="btn btn-outline-secondary">Read more</a>
+            <a href="{% url 'app:post' id=p.id%}" class="btn btn-outline-primary">Read more</a>
           </div>
         </div>
       {% endfor %}
