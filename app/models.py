@@ -48,4 +48,4 @@ class Reply(models.Model):
     reply = models.TextField()
 
     def __str__(self):
-        return self.user.username
+        return self.reply

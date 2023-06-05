@@ -14,4 +14,5 @@ urlpatterns = [
     path('profile/<str:id>', views.profile, name='profile'),
     path('contact/', views.contact, name='contact'),
     path('logout/', views.log_out, name='logout'),
+    path('comment/<str:id>', views.reply, name='reply'),
 ]

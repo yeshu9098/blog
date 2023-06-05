@@ -33,32 +33,52 @@ Post
                     <h4>Leave a comment</h4>
                     <form action="" method="post">
                         {% csrf_token %}
-                        <textarea name="comment" id="" msg cols="30" rows="5" class="form-control" required></textarea>
+                        <textarea name="comment" id="" msg cols="30" rows="2" class="form-control" required></textarea>
                         <br>
                         <button type="submit" class="btn btn-outline-success">Send</button>
                     </form>
                 </div>
-                <br><hr>
+                <br>
+                <hr>
                 <h1>Comments</h1>
                 {% if not post.comments.all %}
                 No Comments
                 {% else %}
                 {% for comment in post.comments.all %}
-                {{ comment.user.username }}
-                -
-                {{ comment.date }}<br>
-                {{ comment.comment }}
-                <hr>
-                {% for reply in comments.replies.all %}
-                <li class="reply">
-                <div class="reply-body">
-                    <h3>{{ reply.user.username }}</h3>
-                    <div class="meta mb-3">{{ reply.date }}</div>
-                    <p>{{ reply.reply }}</p>
+                <div class="row p-2">
+                    
+                    <div class="col-6">
+                        <div class="card p-2">
+                            
+                        {{ comment.user.username }}
+                        -
+                        {{ comment.date }}<br>
+                        {{ comment.comment }}
+                        <a href="{% url 'app:reply' id=comment.id %}">Reply</a>
+                        </div>
+                    </div>
+                    {% for reply in comment.replies.all %}
+                        {% if reply %}
+                        <div class="col-6 pt-5">
+                            <div class="card p-2">
+                            
+                            {{ reply.user.username }}
+                            -
+                            {{ reply.timestamp }}<br>
+                            {{ reply.reply }}
+                            
+                            </div>
+                        </div>
+                        {% else %}
+                        <a href="{% url 'app:reply' id=comment.id %}">Reply</a>
+                        {% endif %}
+                    {% endfor %}
+                    
                 </div>
-                </li>
-            {% endfor %}
                 {% endfor %}
+                <hr>
+                
+                
                 {% endif %}
 
 
@@ -80,4 +100,20 @@ Post
 
 </div>
 
+
+<!-- <script>
+    const replayButtons = document.querySelectorAll('.replay');
+        
+        replayButtons.forEach(item => {
+            item.addEventListener('click', () => {
+                item.parentElement.insertAdjacentHTML('beforeend', `
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{reply}}
+                    <button type="submit">send</button>
+                </form>
+                `);
+            });
+        })
+</script> -->
 {% endblock %}

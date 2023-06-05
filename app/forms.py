@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contact, Post, Comment
+from .models import Contact, Post, Comment, Reply
 
 class MessageForm(forms.ModelForm):
     message = forms.Textarea()
@@ -31,4 +31,16 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('comment',)
-        
+
+
+class ReplyForm(forms.ModelForm):
+    reply = forms.CharField(label ="", widget = forms.Textarea(
+    attrs ={
+        'class':'form-control',
+        'placeholder':'reply here !',
+        'rows':1,
+        'cols':50
+    }))
+    class Meta:
+        model = Reply
+        fields = ('reply',)

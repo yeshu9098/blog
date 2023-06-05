@@ -4,8 +4,8 @@ from django.contrib.auth import logout
 from django.urls import reverse, reverse_lazy
 from django.core.mail import send_mail
 from datetime import datetime
-from app.models import Category, Contact, Post, Comment
-from .forms import MessageForm, PostForm, CommentForm
+from app.models import Category, Contact, Post, Comment, Reply
+from .forms import MessageForm, PostForm, CommentForm, ReplyForm
 from account.models import CustomUser
 import requests
 from django.views.generic.detail import DetailView
@@ -24,10 +24,29 @@ def index(request):
     return render(request, 'index.html', data) 
 
 
+
+def reply(request, id):
+    comment = get_object_or_404(Comment, id=id)
+    reply_form = ReplyForm(request.POST or None)
+
+    if reply_form.is_valid():
+        reply = request.POST.get('reply')
+        reply = Reply.objects.create(comment = comment, user = request.user, reply = reply)
+        reply.save()
+        return redirect("/")
+
+    context={
+        "reply" : reply_form,
+        "comment" : comment,
+    }
+    return render(request, 'reply.html', context)
+
+
 def post(request, id):
     post = get_object_or_404(Post, id=id)
     cat = Category.objects.all()[:10]
     comments = Comment.objects.all()
+
     form = CommentForm(request.POST or None)
     if form.is_valid():
         comment = request.POST.get('comment')
@@ -35,6 +54,7 @@ def post(request, id):
         comment.save()
         return redirect("/")
 
+    
     context={
         "post":post,
         "cat" : cat,
