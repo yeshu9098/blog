@@ -10,8 +10,8 @@
     <form method="POST">
     {% csrf_token %}
     <p>Are you sure to delete the post</p>
-    <button type="submit" class="btn btn-outline-danger">Yes</button>
-    <a class="btn btn-outline-primary" href="/">Cancel </a>
+    <button type="submit" class="btn btn-danger">Yes</button>
+    <a class="btn btn-primary" href="/">Cancel </a>
     {% else %}
     <p>You are not logged in</p>
     <a class="btn btn-outline-primary" href="{% url 'account:login' %}">Log In</a> |

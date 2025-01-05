@@ -2,31 +2,35 @@
 {% block title %}Edit Profile{% endblock %}
 {% block body %}
 
-<div class="container">
-    <div class="m-2 mt-3 mb-5">
-      <form action="" method="POST">
-        {% csrf_token %}
-        <div class="mb-3">
-          <label for="email" class="form-label">Email address</label>
-          <input type="email" name="email" value="{{ user.email }}" class="form-control">
-        </div>
-        <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
-          <input type="text" name="username" value="{{ user.username }}" class="form-control">
-        </div>
-        <div class="mb-3">
-          <label for="first_name" class="form-label">Firstname</label>
-          <input type="text" name="first_name" value="{{ user.first_name }}" class="form-control">
-        </div>
-        <div class="mb-3">
-          <label for="last_name" class="form-label">Lastname</label>
-          <input type="text" name="last_name" value="{{ user.last_name }}" class="form-control">
-        </div>
-        <button class="btn btn-outline-primary" type="submit">Update</button>
-        <a class="btn btn-outline-danger" href="{% url 'account:password' %}">Change Password</a>
-        <a class="btn btn-outline-secondary" href="{% url 'app:index' %}">Cancel</a>
-      </form>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="card p-4 shadow-sm" style="width: 100%; max-width: 500px;">
+        <h4 class="card-title text-center mb-4">Edit Profile</h4>
+        
+        <form action="" method="POST">
+            {% csrf_token %}
+            
+            <!-- First Name Input -->
+            <div class="mb-3">
+                <label for="first_name" class="form-label">First Name</label>
+                <input type="text" name="first_name" value="{{ user.first_name }}" class="form-control form-control-lg" id="first_name" required>
+            </div>
+
+            <!-- Last Name Input -->
+            <div class="mb-3">
+                <label for="last_name" class="form-label">Last Name</label>
+                <input type="text" name="last_name" value="{{ user.last_name }}" class="form-control form-control-lg" id="last_name" required>
+            </div>
+
+            <!-- Update Button -->
+            <button type="submit" class="btn btn-primary w-100 mb-2">Update</button>
+
+            <!-- Links -->
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'account:password' %}" class="btn btn-outline-danger btn-sm">Change Password</a>
+                <a href="{% url 'app:index' %}" class="btn btn-outline-secondary btn-sm">Cancel</a>
+            </div>
+        </form>
     </div>
-  </div>
+</div>
 
 {% endblock %}

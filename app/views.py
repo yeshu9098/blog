@@ -155,15 +155,15 @@ def update(request, id):
 
 def profile(request, id):
     if request.user.is_authenticated:
-        obj = get_object_or_404(CustomUser, id = id)
-        logged_in_user_posts = Post.objects.filter(user=obj)
-        post = get_object_or_404(Post, id = id)
+        user = get_object_or_404(CustomUser, id = id)
+        logged_in_user_posts = Post.objects.filter(user=user)
+        # post = get_object_or_404(logged_in_user_posts, id = id)
         context = {
-            'obj': obj,
-            'posts': logged_in_user_posts,
-            'post': post,
+            'obj': user,
+            'logged_in_user_posts': logged_in_user_posts,
+            # 'post': post,
         }
-        print(logged_in_user_posts)
+        # print(logged_in_user_posts)
         return render(request, 'profile.html', context)
     else:
         return redirect("account:login")
@@ -217,9 +217,3 @@ def log_out(request):
     if request.user.is_authenticated:
         logout(request)
         return redirect(reverse('account:login'))
-
-
-def api(request):
-    response = requests.get("https://api.covid19api.com/countries").json()
-    return render(request,'api.html', { 'responce': response })
-

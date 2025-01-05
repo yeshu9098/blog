@@ -37,7 +37,10 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     email = models.EmailField("email address", unique=True)
 
+    username = None  
+
+
     USERNAME_FIELD = "email" # make the user log in with the email
-    REQUIRED_FIELDS = ["username"]
+    REQUIRED_FIELDS = []
 
     objects = CustomUserManager()

@@ -6,30 +6,32 @@ Category
 
 {% block body %}
 
-<div class="container">
+<div class="container  mt-4 mb-4">
   <div class="row">
     <div class="col-sm-9">
       {% for p in posts %}
         <div class="card mt-2">
           <div class="card-body">
             <h5 class="card-title">{{ p.title }}</a></h5>
-            <p class="card-text">{{ p.content|striptags|slice:':300' }}</p>
-            <a href="{% url 'app:post' id=p.id%}" class="btn btn-outline-secondary">Read more</a>
+            <p class="card-text">{{ p.content|striptags|slice:':300'|safe }}</p>
+            <a href="{% url 'app:post' id=p.id%}" class="btn btn-primary btn-sm">Read more</a>
           </div>
         </div>
       {% endfor %}
     </div>
     <div class="col-sm-3">
-      <div class="card mt-2">
-        <div class="card-header">
-          Categories
+      <div class="card shadow-sm mt-2 mb-2">
+        <div class="card-header bg-primary text-white">
+            Categories
         </div>
         <ul class="list-group list-group-flush">
-          {% for cat in cat %} 
-          <a href="/category/{{cat.title}}" class="list-group-item">{{cat.title}}</a>
-          {% endfor %} 
+            {% for cat in cat %}
+            <a href="/category/{{ cat.title }}" class="list-group-item list-group-item-action text-primary">
+                {{ cat.title }}
+            </a>
+            {% endfor %}
         </ul>
-      </div>
+    </div>
     </div>
   </div>   
 </div>

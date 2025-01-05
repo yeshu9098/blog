@@ -3,23 +3,30 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
-
-  
-  <div class="container">
-    <div class="mt-5 mb-5">
-      <form action="" method="POST">
-        {% csrf_token %}
-        <div class="mb-3">
-          <label for="email" class="form-label">Email address</label>
-          <input type="email" name="email" class="form-control" id="email">
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="card p-4 shadow-sm" style="width: 100%; max-width: 400px;">
+        <h4 class="card-title text-center mb-4">Login</h4>
+        <form action="" method="POST">
+            {% csrf_token %}
+            
+            <!-- Email Input -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" name="email" class="form-control form-control-sm" id="email" placeholder="">
+            </div>
+            
+            <!-- Password Input -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control form-control-sm" id="password" placeholder="">
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary btn-sm w-100">Login</button>
+        </form>
+        <div class="text-center mt-3">
+            <a href="{% url 'account:register' %}" class="btn btn-outline-secondary btn-sm">Create an Account</a>
         </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" name="password" class="form-control" id="epassword">
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-        <a class="btn btn-outline-secondary" href="{% url 'account:register' %}">Create a Account</a>
-      </form>
     </div>
-  </div>
+</div>
 {% endblock %}
