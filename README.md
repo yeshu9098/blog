@@ -14,7 +14,7 @@ Optimized for all devices using Bootstrap.
 
 ## Screenshot
 ![Image Description](https://res.cloudinary.com/dxakzehph/image/upload/v1737186651/git/tdmvm8ooriquvzkpufon.png)
-![Image Description](https://res.cloudinary.com/dxakzehph/image/upload/v1737186693/git/majyg9syf9brd0ktchps.png)
+
 
 
 ## Technologies Used
